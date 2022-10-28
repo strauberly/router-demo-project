@@ -4,9 +4,17 @@ Small project for practice with learned concepts with react-router as well as ex
 
 ---
 
---27 Oct 2022--
+--28 Oct 2022--
 
 implemented
+
+- eliminated hard coding in nested paths through useRouteMatch(), location.pathname, and creation of location object.
+
+---
+
+--27 Oct 2022--
+
+implemented:
 
 - created a prompt component utilized if user starts creating a quote and clicks nav away
 
@@ -22,7 +30,7 @@ implemented
 
 --26 Oct 2022--
 
-implemented
+implemented:
 
 - basics of setting up different routes ie dynamic, switch, nested and conditional
 
