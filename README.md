@@ -4,6 +4,16 @@ Small project for practice with learned concepts with react-router as well as ex
 
 ---
 
+--31 Oct 2022--
+
+- Established supabase backend.
+- Need to get data from form established and think hook up to new quote utilizing use http and api added to lecture.
+- Added Max's files api.js and use http
+- Still researching but looks like we establish all our requests in api.js and then pass them into the custom hook for monitoring the backend details of the http request.
+- Application currently writes quotes to supabase backend as desired.
+
+---
+
 --28 Oct 2022--
 
 implemented
