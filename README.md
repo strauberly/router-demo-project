@@ -4,6 +4,16 @@ Small project for practice with learned concepts with react-router as well as ex
 
 ---
 
+--1 Nov 2022--
+
+- application is returning all quotes stored as desired but is not yet returning a single quote as desired just yet.
+
+- are getting a response corresponding with id of selected quote.
+
+- investigate formatting of response.
+
+---
+
 --31 Oct 2022--
 
 - Established supabase backend.
