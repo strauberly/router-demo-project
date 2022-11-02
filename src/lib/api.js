@@ -19,27 +19,48 @@ export const addQuote = async (quoteData) => {
   return null;
 };
 
-// export async function getAllQuotes() {
-//   const response = await fetch(`${FIREBASE_DOMAIN}/quotes.json`);
-//   const data = await response.json();
+export async function getAllQuotes() {
+  const response = await fetch(supabase.from("quotes").select("*"));
+  const { data } = await supabase.from("quotes").select("*");
+  if (!response.ok) {
+    throw new Error(data.message || "Could not fetch quotes.");
+  }
 
-//   if (!response.ok) {
-//     throw new Error(data.message || "Could not fetch quotes.");
-//   }
+  const transformedQuotes = [];
 
-//   const transformedQuotes = [];
+  for (const key in data) {
+    const quoteObj = {
+      id: key,
+      ...data[key],
+    };
 
-//   for (const key in data) {
-//     const quoteObj = {
-//       id: key,
-//       ...data[key],
-//     };
+    transformedQuotes.push(quoteObj);
+  }
 
-//     transformedQuotes.push(quoteObj);
-//   }
+  return transformedQuotes;
+}
 
-//   return transformedQuotes;
-// }
+export async function getSingleQuote(quoteId) {
+  const response = await fetch(
+    supabase.from("quotes").select().eq("id", quoteId)
+  );
+  const { data } = await supabase
+    .from("quotes")
+    .select("id, author, text")
+    .eq("id", quoteId)
+    .single();
+
+  if (!response.ok) {
+    throw new Error(data.message || "Could not fetch quote.");
+  }
+
+  const loadedQuote = {
+    id: quoteId,
+    ...data,
+  };
+
+  return loadedQuote;
+}
 
 // export async function getSingleQuote(quoteId) {
 //   const response = await fetch(`${FIREBASE_DOMAIN}/quotes/${quoteId}.json`);

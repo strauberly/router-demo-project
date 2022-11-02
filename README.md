@@ -4,6 +4,38 @@ Small project for practice with learned concepts with react-router as well as ex
 
 ---
 
+--2 Nov 2022--
+
+- issue for single quote results was remembering that a query ending in .eq() returns an array while .single() returns an object.
+
+-api.js-
+
+```
+export async function getSingleQuote(quoteId) {
+const { data } = await supabase
+.from("quotes")
+.select("id, author, text")
+.eq("id", quoteId)
+.single();
+
+```
+
+- Quotes section now produces desired results.
+
+- Began research into implementation of comments section.
+
+---
+
+--1 Nov 2022--
+
+- application is returning all quotes stored as desired but is not yet returning a single quote as desired just yet.
+
+- are getting a response corresponding with id of selected quote.
+
+- investigate formatting of response.
+
+---
+
 --31 Oct 2022--
 
 - Established supabase backend.
