@@ -42,7 +42,8 @@ const QuoteDetail = () => {
 
   if (!loadedQuote.text) {
     console.log(quoteId);
-    console.log(loadedQuote);
+    console.log(loadedQuote.text);
+    console.log({ loadedQuote });
     return <p>No Quote Found!</p>;
   }
 

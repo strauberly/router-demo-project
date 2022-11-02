@@ -22,7 +22,6 @@ export const addQuote = async (quoteData) => {
 export async function getAllQuotes() {
   const response = await fetch(supabase.from("quotes").select("*"));
   const { data } = await supabase.from("quotes").select("*");
-  console.log(data);
   if (!response.ok) {
     throw new Error(data.message || "Could not fetch quotes.");
   }
@@ -47,8 +46,9 @@ export async function getSingleQuote(quoteId) {
   );
   const { data } = await supabase
     .from("quotes")
-    .select("author, text")
-    .eq("id", quoteId);
+    .select("id, author, text")
+    .eq("id", quoteId)
+    .single();
 
   if (!response.ok) {
     throw new Error(data.message || "Could not fetch quote.");
@@ -58,9 +58,6 @@ export async function getSingleQuote(quoteId) {
     id: quoteId,
     ...data,
   };
-
-  console.log(loadedQuote);
-  console.log(data);
 
   return loadedQuote;
 }
