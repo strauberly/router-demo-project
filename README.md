@@ -4,6 +4,18 @@ Small project for practice with learned concepts with react-router as well as ex
 
 ---
 
+--3 Nov 2022--
+
+- comments section updates mostly as desired however need to figure it all out as an array that can be pushed to and returned.
+
+Basic logic to follow:
+
+- call comments column and store as an array
+
+- if value at [0] === 'null' -> append with new comment and update column
+
+- if value at [0] !== 'null' -> push new comment to array and update column.
+
 --2 Nov 2022--
 
 - issue for single quote results was remembering that a query ending in .eq() returns an array while .single() returns an object.
