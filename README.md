@@ -4,6 +4,10 @@ Small project for practice with learned concepts with react-router as well as ex
 
 ---
 
+--4 Nov 2022--
+
+- almost there, calling comments field and pushing values to new array, however adding a new comment resets the array and overwrites instead of persisting the data. Going to go back to add quote and see if i might find what I seek there. Or possibly a custom hook.
+
 --3 Nov 2022--
 
 - comments section updates mostly as desired however need to figure it all out as an array that can be pushed to and returned.
