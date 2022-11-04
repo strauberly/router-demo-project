@@ -61,6 +61,8 @@ export async function getSingleQuote(quoteId) {
 }
 
 export async function addComment(requestData) {
+  // get old comment
+  // push new comment
   console.log(requestData.quoteId);
   console.log(requestData.commentData);
 
@@ -69,22 +71,45 @@ export async function addComment(requestData) {
   const getComments = await supabase
     .from("quotes")
     .select("comments")
-    .eq("id", requestData.quoteId);
+    .eq("id", requestData.quoteId)
+    .single();
 
-  const comments = await getComments;
-  console.log(comments.data);
+  const oldComments = await getComments;
+  // console.log(comments.data);
+  // console.log(comments);
+  // console.log(comments.data.comments);
 
-  const pulledComments = comments;
-  for (const key in comments) {
-    pulledComments.push({
-      text: comments[key].text,
-    });
-    console.log(pulledComments.json());
-  }
+  console.log(oldComments.data.comments);
+
+  const newComments = [];
+  newComments.push(oldComments.data.comments.pop());
+  newComments.push(requestData.commentData);
+  // newComments.push("null");
+  console.log(newComments);
+  // const commentText = comments.data.comments;
+  // console.log(newComments[0]);
+  // console.log(commentText);
+
+  // if (newComments[0] === JSON.stringify(commentText)) {
+  //   newComments[0] = requestData.commentData;
+  //   console.log(newComments);
+  // } else {
+  //   newComments.push(requestData.commentData);
+  //   console.log(newComments);
+
+  //   const response = await supabase
+  //     .from("quotes")
+  //     .update({ comments: newComments })
+  //     .eq("id", requestData.quoteId)
+  //     .single();
+
+  //   const data = await response.json();
+  //   console.log(data);
+  // }
 
   const response = await supabase
     .from("quotes")
-    .update({ comments: requestData.commentData })
+    .update({ comments: newComments })
     .eq("id", requestData.quoteId)
     .single();
 
@@ -94,30 +119,29 @@ export async function addComment(requestData) {
     throw new Error(data.message || "could not add comment.");
   }
   // return { commentId: data.name };
+
+  //   const response = await fetch(
+  //     `${FIREBASE_DOMAIN}/comments/${requestData.quoteId}.json`,
+  //     {
+  //       method: "POST",
+  //       body: JSON.stringify(requestData.commentData),
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     }
+  //   );
+  //   const data = await response.json();
+
+  //   if (!response.ok) {
+  //     throw new Error(data.message || "Could not add comment.");
+  //   }
+
+  //   return { commentId: data.name };
+  // }
+
+  // ==================
+  // ==================================================
 }
-
-//   const response = await fetch(
-//     `${FIREBASE_DOMAIN}/comments/${requestData.quoteId}.json`,
-//     {
-//       method: "POST",
-//       body: JSON.stringify(requestData.commentData),
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//     }
-//   );
-//   const data = await response.json();
-
-//   if (!response.ok) {
-//     throw new Error(data.message || "Could not add comment.");
-//   }
-
-//   return { commentId: data.name };
-// }
-
-// ==================
-// ==================================================
-
 export async function getAllComments(quoteId) {
   // const response = await fetch(`${FIREBASE_DOMAIN}/comments/${quoteId}.json`);
 
