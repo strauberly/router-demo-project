@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-
-import classes from "./Comments.module.css";
-import NewCommentForm from "./NewCommentForm";
 import useHttp from "../../hooks/use-http";
 import { getAllComments } from "../../lib/api";
 import LoadingSpinner from "../ui/LoadingSpinner";
+import CommentsList from "./CommentsList";
+import classes from "./Comments.module.css";
+import NewCommentForm from "./NewCommentForm";
 
 const Comments = () => {
   const [isAddingComment, setIsAddingComment] = useState(false);
@@ -24,7 +24,9 @@ const Comments = () => {
     setIsAddingComment(true);
   };
 
-  const addedCommentHandler = () => {};
+  const addedCommentHandler = useCallback(() => {
+    sendRequest(quoteId);
+  }, [sendRequest, quoteId]);
 
   let comments;
 
@@ -37,7 +39,7 @@ const Comments = () => {
   }
 
   if (status === "completed" && loadedComments && loadedComments.length > 0) {
-    comments = <loadedComments comments={loadedComments} />;
+    comments = <CommentsList comments={loadedComments} />;
   }
 
   if (
@@ -57,7 +59,7 @@ const Comments = () => {
       )}
       {isAddingComment && (
         <NewCommentForm
-          quoteId={quoteId}
+          quoteId={params.quoteId}
           onAddedComment={addedCommentHandler}
         />
       )}
