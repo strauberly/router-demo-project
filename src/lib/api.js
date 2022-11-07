@@ -61,55 +61,12 @@ export async function getSingleQuote(quoteId) {
 }
 
 export async function addComment(requestData) {
-  // get old comment
-  // push new comment
-  console.log(requestData.quoteId);
-  console.log(requestData.commentData);
-
-  // const newComment = requestData.commentData;
-
-  const getComments = await supabase
-    .from("quotes")
-    .select("comments")
-    .eq("id", requestData.quoteId)
-    .single();
-
-  const oldComments = await getComments;
-  // console.log(comments.data);
-  // console.log(comments);
-  // console.log(comments.data.comments);
-
-  console.log(oldComments.data.comments);
-
-  const newComments = [];
-  newComments.push(oldComments.data.comments.pop());
-  newComments.push(requestData.commentData);
-  // newComments.push("null");
-  console.log(newComments);
-  // const commentText = comments.data.comments;
-  // console.log(newComments[0]);
-  // console.log(commentText);
-
-  // if (newComments[0] === JSON.stringify(commentText)) {
-  //   newComments[0] = requestData.commentData;
-  //   console.log(newComments);
-  // } else {
-  //   newComments.push(requestData.commentData);
-  //   console.log(newComments);
-
-  //   const response = await supabase
-  //     .from("quotes")
-  //     .update({ comments: newComments })
-  //     .eq("id", requestData.quoteId)
-  //     .single();
-
-  //   const data = await response.json();
-  //   console.log(data);
-  // }
+  // first get comments loaded to an array, push our new comment in addition and then update and push
 
   const response = await supabase
     .from("quotes")
-    .update({ comments: newComments })
+    // maybe just load the text from the comment
+    .update({ comments: requestData.commentData })
     .eq("id", requestData.quoteId)
     .single();
 
@@ -118,140 +75,42 @@ export async function addComment(requestData) {
   if (!response.ok) {
     throw new Error(data.message || "could not add comment.");
   }
-  // return { commentId: data.name };
 
-  //   const response = await fetch(
-  //     `${FIREBASE_DOMAIN}/comments/${requestData.quoteId}.json`,
-  //     {
-  //       method: "POST",
-  //       body: JSON.stringify(requestData.commentData),
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     }
-  //   );
-  //   const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || "Could not add comment.");
+  }
 
-  //   if (!response.ok) {
-  //     throw new Error(data.message || "Could not add comment.");
-  //   }
-
-  //   return { commentId: data.name };
-  // }
-
-  // ==================
-  // ==================================================
+  return { commentId: data.name };
 }
+
 export async function getAllComments(quoteId) {
-  // const response = await fetch(`${FIREBASE_DOMAIN}/comments/${quoteId}.json`);
+  const response = await fetch(
+    supabase.from("quotes").select("comments").eq("id", quoteId).single()
+  );
 
-  // const data = await response.json();
+  const { data } = await supabase
+    .from("quotes")
+    .select("comments")
+    .eq("id", quoteId)
+    .single();
+  if (!response.ok) {
+    throw new Error(data.message || "Could not fetch quotes.");
+  }
 
-  // if (!response.ok) {
-  //   throw new Error(data.message || "Could not get comments.");
-  // }
+  console.log(data);
+  console.log(data.data);
+  console.log(data.comments);
 
   const transformedComments = [];
 
-  // for (const key in data) {
-  //   const commentObj = {
-  //     id: key,
-  //     ...data[key],
-  //   };
+  for (const key in data) {
+    const commentObj = {
+      id: key,
+      ...data[key],
+    };
 
-  //   transformedComments.push(commentObj);
-  // }
-
+    transformedComments.push(commentObj);
+  }
+  console.log(transformedComments);
   return transformedComments;
 }
-
-// ================================================
-
-// export async function getSingleQuote(quoteId) {
-//   const response = await fetch(`${FIREBASE_DOMAIN}/quotes/${quoteId}.json`);
-//   const data = await response.json();
-
-//   if (!response.ok) {
-//     throw new Error(data.message || "Could not fetch quote.");
-//   }
-
-//   const loadedQuote = {
-//     id: quoteId,
-//     ...data,
-//   };
-
-//   return loadedQuote;
-// }
-
-// export async function addQuote(quoteData) {
-//   const response = await fetch(`${FIREBASE_DOMAIN}/quotes.json`, {
-//     method: "POST",
-//     body: JSON.stringify(quoteData),
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//   });
-//   const data = await response.json();
-
-//   if (!response.ok) {
-//     throw new Error(data.message || "Could not create quote.");
-//   }
-
-//   return null;
-// }
-
-// export async function addQuote(quoteData) {
-//   const response = await supabase
-//     .from("quotes")
-//     .insert({ author: quoteData.author, text: quoteData.text });
-
-//   const data = await response.json();
-//   console.log(data);
-//   if (!response.ok) {
-//     throw new Error(data.message || "could not create quote.");
-//   }
-//   return null;
-// }
-
-// export async function addComment(requestData) {
-//   const response = await fetch(
-//     `${FIREBASE_DOMAIN}/comments/${requestData.quoteId}.json`,
-//     {
-//       method: "POST",
-//       body: JSON.stringify(requestData.commentData),
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//     }
-//   );
-//   const data = await response.json();
-
-//   if (!response.ok) {
-//     throw new Error(data.message || "Could not add comment.");
-//   }
-
-//   return { commentId: data.name };
-// }
-
-// export async function getAllComments(quoteId) {
-//   const response = await fetch(`${FIREBASE_DOMAIN}/comments/${quoteId}.json`);
-
-//   const data = await response.json();
-
-//   if (!response.ok) {
-//     throw new Error(data.message || "Could not get comments.");
-//   }
-
-//   const transformedComments = [];
-
-//   for (const key in data) {
-//     const commentObj = {
-//       id: key,
-//       ...data[key],
-//     };
-
-//     transformedComments.push(commentObj);
-//   }
-
-//   return transformedComments;
-// }

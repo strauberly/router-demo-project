@@ -4,6 +4,10 @@ Small project for practice with learned concepts with react-router as well as ex
 
 ---
 
+--7 Nov 2022--
+
+- closer just need to figure out the update. Comments list was being called incorrectly.
+
 --4 Nov 2022--
 
 - almost there, calling comments field and pushing values to new array, however adding a new comment resets the array and overwrites instead of persisting the data. Going to go back to add quote and see if i might find what I seek there. Or possibly a custom hook.
