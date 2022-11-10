@@ -4,9 +4,20 @@ Small project for practice with learned concepts with react-router as well as ex
 
 ---
 
+-- 10 Nov 2022 --
+
+Our past means were not writing a unique id for our program to identify comments by. Refactored NewCommentForm and api.js to provide this functionality.
+
+Next step will include refactoring api.js for how it calls the information and sorts the key. May further try to break down into simply returning an array an essentially for each comment :: comments
+push comment into the array we are returning.
+
+Possibly another refactor.
+
 --7 Nov 2022--
 
 - closer just need to figure out the update. Comments list was being called incorrectly.
+
+---
 
 --4 Nov 2022--
 

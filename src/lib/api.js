@@ -1,5 +1,4 @@
 import { createClient } from "@supabase/supabase-js";
-
 const supabaseUrl = process.env.REACT_APP_SUPABASE_URL;
 const supabaseAnonKey = process.env.REACT_APP_SUPABASE_ANON_KEY;
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
@@ -61,12 +60,15 @@ export async function getSingleQuote(quoteId) {
 }
 
 export async function addComment(requestData) {
-  // first get comments loaded to an array, push our new comment in addition and then update and push
+  // call comments and preserve into a new const and then push const in to comments []
+
+  const newComment = { comment: requestData.text, id: requestData.commentId };
+  const comments = [];
+  comments.push(newComment);
 
   const response = await supabase
     .from("quotes")
-    // maybe just load the text from the comment
-    .update({ comments: requestData.commentData })
+    .update({ comments: comments })
     .eq("id", requestData.quoteId)
     .single();
 
@@ -98,11 +100,10 @@ export async function getAllComments(quoteId) {
   }
 
   console.log(data);
-  console.log(data.data);
   console.log(data.comments);
 
   const transformedComments = [];
-
+  // sort this
   for (const key in data) {
     const commentObj = {
       id: key,
