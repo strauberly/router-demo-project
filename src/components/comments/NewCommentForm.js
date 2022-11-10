@@ -25,7 +25,14 @@ const NewCommentForm = (props) => {
 
     // optional: Could validate here
 
-    sendRequest({ commentData: { text: enteredText }, quoteId: props.quoteId });
+    //   sendRequest({ commentData: { text: enteredText }, quoteId: props.quoteId });
+    // };
+
+    sendRequest({
+      text: enteredText,
+      commentId: Math.floor(Math.random() * 1000) + 1,
+      quoteId: props.quoteId,
+    });
   };
 
   return (
