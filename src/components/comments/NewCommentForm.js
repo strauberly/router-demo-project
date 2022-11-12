@@ -28,9 +28,17 @@ const NewCommentForm = (props) => {
     //   sendRequest({ commentData: { text: enteredText }, quoteId: props.quoteId });
     // };
 
+    // sendRequest({
+    //   text: enteredText,
+    //   commentId: Math.floor(Math.random() * 1000) + 1,
+    //   quoteId: props.quoteId,
+    // });
+
     sendRequest({
-      text: enteredText,
-      commentId: Math.floor(Math.random() * 1000) + 1,
+      commentData: {
+        text: enteredText,
+      },
+      // commentId: Math.floor(Math.random() * 1000) + 1,
       quoteId: props.quoteId,
     });
   };
