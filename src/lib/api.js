@@ -33,7 +33,7 @@ export async function getAllQuotes() {
 
     transformedQuotes.push(quoteObj);
   }
-
+  console.log(transformedQuotes);
   return transformedQuotes;
 }
 
@@ -62,45 +62,45 @@ export async function getSingleQuote(quoteId) {
 export async function addComment(requestData) {
   // call comments and preserve into a new const and then push const in to comments []
 
-  const newComment = { comment: requestData.text, id: requestData.commentId };
-  const comments = [];
-  comments.push(newComment);
+  // const newComment = { comment: requestData.text, id: requestData.commentId };
+  // const comments = [];
+  // comments.push(newComment);
 
-  const response = await supabase
-    .from("quotes")
-    .update({ comments: comments })
-    .eq("id", requestData.quoteId)
-    .single();
+  const response = await supabase.from("quoteComments").insert({
+    text: requestData.commentData.text,
+    quoteId: requestData.quoteId,
+  });
 
-  const data = await response.json();
-  console.log(data);
-  if (!response.ok) {
-    throw new Error(data.message || "could not add comment.");
+  // const response = await supabase
+  //   .from("quotes")
+  //   .update({ comments: comments })
+  //   .eq("id", requestData.quoteId)
+  //   .single();
+
+  console.log(response);
+  if (!response.status === 201) {
+    throw new Error(response.message || "could not add comment.");
   }
 
-  if (!response.ok) {
-    throw new Error(data.message || "Could not add comment.");
-  }
-
-  return { commentId: data.name };
+  return { commentId: response.name };
 }
 
 export async function getAllComments(quoteId) {
+  console.log(quoteId);
+
   const response = await fetch(
-    supabase.from("quotes").select("comments").eq("id", quoteId).single()
+    supabase.from("quoteComments").select("id, text").eq("quoteId", quoteId)
   );
 
   const { data } = await supabase
-    .from("quotes")
-    .select("comments")
-    .eq("id", quoteId)
-    .single();
+    .from("quoteComments")
+    .select("id, text")
+    .eq("quoteId", quoteId);
   if (!response.ok) {
     throw new Error(data.message || "Could not fetch quotes.");
   }
 
   console.log(data);
-  console.log(data.comments);
 
   const transformedComments = [];
   // sort this
@@ -109,6 +109,8 @@ export async function getAllComments(quoteId) {
       id: key,
       ...data[key],
     };
+
+    console.log(commentObj);
 
     transformedComments.push(commentObj);
   }

@@ -4,6 +4,14 @@ Small project for practice with learned concepts with react-router as well as ex
 
 ---
 
+-- 13 Nov 2022 --
+
+- Full desired functionality achieved! Key was making double checking how objects were being mapped and comparing against the example. One instance was that the example project utilizes response as a result of utilizing fire base and how its responses are formatted vs. utilizing supabase and the response we are seeking is actually a status code.
+
+- Lots that can be improved on and even more things learned through the process. Would very much like to learn more about PostgeSQL and Supbase as a result of this and clean up our database into a single table.
+
+---
+
 -- 10 Nov 2022 --
 
 Our past means were not writing a unique id for our program to identify comments by. Refactored NewCommentForm and api.js to provide this functionality.
@@ -12,6 +20,8 @@ Next step will include refactoring api.js for how it calls the information and s
 push comment into the array we are returning.
 
 Possibly another refactor.
+
+---
 
 --7 Nov 2022--
 
