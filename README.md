@@ -4,6 +4,16 @@ Small project for practice with learned concepts with react-router as well as ex
 
 ---
 
+-- 16 Nov 2022 --
+
+- Finished lectures for differences in react router from version 5.2 to 6.0 and 6.4.
+
+- Began lectures for application deployment and implemented lazy loading.
+
+- Ran build script.
+
+---
+
 -- 13 Nov 2022 --
 
 - Full desired functionality achieved! Key was making double checking how objects were being mapped and comparing against the example. One instance was that the example project utilizes response as a result of utilizing fire base and how its responses are formatted vs. utilizing supabase and the response we are seeking is actually a status code.
